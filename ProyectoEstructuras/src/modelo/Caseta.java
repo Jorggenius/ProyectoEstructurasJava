@@ -5,6 +5,8 @@
 package modelo;
 
 import java.io.Serializable;
+import util.IList;
+import util.Lista;
 
 /**
  *
@@ -16,6 +18,9 @@ public class Caseta implements Serializable{
     private double arrendamiento;
     private int plazas;
     private boolean enUso;
+    private IList<Bus> buses;
+    private IList<Viaje> viajes;
+    private IList<Tiquete> tiquetes;
 
     public Caseta(AdmiFlota admiFlota, Empresa empresa, double arrendamiento, int plazas) {
         this.admiFlota = admiFlota;
@@ -23,6 +28,33 @@ public class Caseta implements Serializable{
         this.arrendamiento = arrendamiento;
         this.plazas = plazas;
         this.enUso = false;
+        this.buses = new Lista<>();
+        this.viajes = new Lista<>();
+        this.tiquetes = new Lista<>();
+    }
+
+    public IList<Tiquete> getTiquetes() {
+        return tiquetes;
+    }
+
+    public void setTiquetes(IList<Tiquete> tiquetes) {
+        this.tiquetes = tiquetes;
+    }
+
+    public IList<Viaje> getViajes() {
+        return viajes;
+    }
+
+    public void setViajes(IList<Viaje> viajes) {
+        this.viajes = viajes;
+    }
+
+    public IList<Bus> getBuses() {
+        return buses;
+    }
+
+    public void setBuses(IList<Bus> buses) {
+        this.buses = buses;
     }
 
     public boolean isEnUso() {
@@ -64,5 +96,6 @@ public class Caseta implements Serializable{
     public void setPlazas(int plazas) {
         this.plazas = plazas;
     }
+    
     
 }

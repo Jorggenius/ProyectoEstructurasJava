@@ -4,10 +4,21 @@
  */
 package control;
 
+import modelo.AdmiFlota;
+import modelo.Caseta;
+
 /**
  *
  * @author JORGE
  */
 public class ControlVistaFlota {
+    ControlVistaTerminal controlVT;
+    public ControlVistaFlota() {
+        this.controlVT = new ControlVistaTerminal();
+    }
+    
+    public Caseta obtenerCaseta(AdmiFlota admiFlota){
+        return controlVT.obtenerCaseta(admiFlota);
+    }
     
 }

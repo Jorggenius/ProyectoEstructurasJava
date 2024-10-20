@@ -4,7 +4,9 @@
  */
 package vista;
 
+import control.ControlVistaFlota;
 import modelo.AdmiFlota;
+import modelo.Caseta;
 
 /**
  *
@@ -12,16 +14,22 @@ import modelo.AdmiFlota;
  */
 public class VistaFlota extends javax.swing.JFrame {
     AdmiFlota admiFlota;
+    Caseta caseta;
+    ControlVistaFlota controlVF;
     /**
      * Creates new form VistaFlota
      */
     public VistaFlota(AdmiFlota admiFlota) {
         initComponents();
         setLocationRelativeTo(this);
+        this.controlVF = new ControlVistaFlota();
         setTitle("Ventana administrador de flota: " + admiFlota.getNombre());
         this.admiFlota = admiFlota;
-        lblNombre.setText("Cliente: " + admiFlota.getNombre());
+        this.caseta = controlVF.obtenerCaseta(admiFlota);
+        lblNombre.setText("AdmiFlota: " + admiFlota.getNombre());
         lblId.setText("Id: " + admiFlota.getId());
+        lblCaseta.setText("Caseta: " + caseta.getEmpresa().getNombre());
+        lblPlazas.setText("Plazas: " + caseta.getPlazas());
     }
 
     /**
@@ -37,10 +45,12 @@ public class VistaFlota extends javax.swing.JFrame {
         lblId = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnGestionViajes = new javax.swing.JButton();
+        btnVentaTiquetes = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        lblCaseta = new javax.swing.JLabel();
+        lblPlazas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,14 +66,33 @@ public class VistaFlota extends javax.swing.JFrame {
         });
 
         jButton1.setText("Gestion de buses");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Gestion de Viajes");
+        btnGestionViajes.setText("Gestion de Viajes");
+        btnGestionViajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionViajesActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Venta de tiquetes");
+        btnVentaTiquetes.setText("Venta de tiquetes");
+        btnVentaTiquetes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentaTiquetesActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Validar reservas");
 
         jButton5.setText("Devoluciones");
+
+        lblCaseta.setText("jLabel1");
+
+        lblPlazas.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,17 +106,21 @@ public class VistaFlota extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblNombre)
                                 .addGap(67, 67, 67)
-                                .addComponent(lblId))
+                                .addComponent(lblId)
+                                .addGap(73, 73, 73)
+                                .addComponent(lblCaseta)
+                                .addGap(90, 90, 90)
+                                .addComponent(lblPlazas))
                             .addComponent(btnRegresar)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(121, 121, 121)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGestionViajes, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVentaTiquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,13 +128,15 @@ public class VistaFlota extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
-                    .addComponent(lblId))
+                    .addComponent(lblId)
+                    .addComponent(lblCaseta)
+                    .addComponent(lblPlazas))
                 .addGap(129, 129, 129)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnGestionViajes)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnVentaTiquetes)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
@@ -117,9 +152,30 @@ public class VistaFlota extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
         VistaLogin vistaL = new VistaLogin();
-        vistaL.setLocationRelativeTo(this);
+        vistaL.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        VistaGestionBuses vistaGB = new VistaGestionBuses(caseta, admiFlota);
+        vistaGB.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnGestionViajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionViajesActionPerformed
+        // TODO add your handling code here:
+        VistaGestionViajes vistaV = new VistaGestionViajes(caseta, admiFlota);
+        vistaV.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnGestionViajesActionPerformed
+
+    private void btnVentaTiquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaTiquetesActionPerformed
+        // TODO add your handling code here:
+        VistaVentaTiquetes vistaVT = new VistaVentaTiquetes(caseta, admiFlota);
+        vistaVT.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentaTiquetesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,13 +183,15 @@ public class VistaFlota extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGestionViajes;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnVentaTiquetes;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel lblCaseta;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblPlazas;
     // End of variables declaration//GEN-END:variables
 }

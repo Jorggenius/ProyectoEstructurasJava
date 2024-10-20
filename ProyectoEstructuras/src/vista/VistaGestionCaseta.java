@@ -248,7 +248,6 @@ public class VistaGestionCaseta extends javax.swing.JFrame {
             String contraseña = txtContraseña.getText();
             int id = Integer.parseInt(txtId.getText());
             AdmiFlota admiFlota = new AdmiFlota(nombre, id, contraseña);
-            controlVGC.guardarAdminFlota(admiFlota);
             String nombre1 = txtEmpresa.getText();
             int nit = Integer.parseInt(txtNit.getText());
             Empresa empresa = new Empresa(nombre1, nit, admiFlota);
@@ -261,10 +260,14 @@ public class VistaGestionCaseta extends javax.swing.JFrame {
                     caseta.setArrendamiento(valor);
                     caseta.setPlazas(plazas);
                     caseta.setEnUso(true);
+                    controlVGC.guardarAdminFlota(admiFlota);
                     Singleton.getINSTANCIA().escribirCasetas();
                     limpiarCampos();
+                    VistaTerminal vistaT = new VistaTerminal();
+                    vistaT.setVisible(true);
+                    this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "La empresa ya esta asignada");
+                    JOptionPane.showMessageDialog(null, "La empresa O nit ya esta asignados");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "El administrador ya esta asignado");

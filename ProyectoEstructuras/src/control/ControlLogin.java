@@ -4,9 +4,12 @@
  */
 package control;
 
+import java.awt.List;
+import modelo.Cliente;
 import modelo.Usuario;
 import singleton.Singleton;
 import util.IList;
+import util.Lista;
 
 /**
  *
@@ -53,4 +56,16 @@ public class ControlLogin {
         }
         return null;
     }
+    
+    public Lista<Cliente> obtenerClientes(){
+        Lista<Cliente> clientes = new Lista<>();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if(usuarios.get(i)instanceof Cliente){
+                clientes.add((Cliente)usuarios.get(i));
+            }
+        }
+        return clientes;
+    }
+        
+    
 }
