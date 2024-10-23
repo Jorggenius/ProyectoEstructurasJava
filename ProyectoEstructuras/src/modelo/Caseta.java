@@ -21,6 +21,8 @@ public class Caseta implements Serializable{
     private IList<Bus> buses;
     private IList<Viaje> viajes;
     private IList<Tiquete> tiquetes;
+    private IList<Reserva> reservas;
+    
 
     public Caseta(AdmiFlota admiFlota, Empresa empresa, double arrendamiento, int plazas) {
         this.admiFlota = admiFlota;
@@ -31,7 +33,17 @@ public class Caseta implements Serializable{
         this.buses = new Lista<>();
         this.viajes = new Lista<>();
         this.tiquetes = new Lista<>();
+        this.reservas = new Lista<>();
     }
+
+    public IList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(IList<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+    
 
     public IList<Tiquete> getTiquetes() {
         return tiquetes;
@@ -97,5 +109,7 @@ public class Caseta implements Serializable{
         this.plazas = plazas;
     }
     
-    
+    public String toString(){
+        return empresa.getNombre();
+    }
 }

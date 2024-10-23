@@ -10,8 +10,8 @@ package modelo;
  */
 public class AdmiFlota extends Usuario{
 
-    public AdmiFlota(String nombre,int id,String contraseña) {
-        super(nombre, id, contraseña);
+    public AdmiFlota(String nombre, int id, String contraseña, int edad, String correo, String telefono, String direccion) {
+        super(nombre, id, contraseña, edad, correo, telefono, direccion);
     }
 
     

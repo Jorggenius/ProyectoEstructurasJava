@@ -4,6 +4,9 @@
  */
 package control;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import modelo.Bus;
 import modelo.Caseta;
 import modelo.Viaje;
 import singleton.Singleton;
@@ -60,9 +63,28 @@ public class ControlGestionViajes {
         for (int i = 0; i < caseta.getViajes().size(); i++) {
             if (caseta.getViajes().get(i).getId() == (id)) {
                 caseta.getViajes().remove(i);
+                Singleton.getINSTANCIA().escribirCasetas();
                 return;
             }
         }
         throw new RuntimeException("No se encuentra el Viaje que desea eliminar");
+    }
+
+    public boolean disponibilidadBus(LocalDate fechaSalida, LocalTime horaSalida, Bus bus) {
+        for (int i = 0; i < caseta.getViajes().size(); i++) {
+            // here I should to compare the date an the hours;
+            if (caseta.getViajes().get(i).getBus().getPlaca().equals(bus.getPlaca())
+                    && fechaSalida.isEqual(caseta.getViajes().get(i).getFechaSalida())) {
+                return false;
+            }
+            if (caseta.getViajes().get(i).getBus().getPlaca().equals(bus.getPlaca())
+                    && fechaSalida.isAfter(caseta.getViajes().get(i).getFechaSalida())
+                    && fechaSalida.isBefore(caseta.getViajes().get(i).getFechaLLegada().plusDays(2))
+//                    && horaSalida.isBefore(caseta.getViajes().get(i).getHoraLlegada())// preguntar al profesor
+                    ) {
+                return false;
+            }
+        }
+        return true;
     }
 }

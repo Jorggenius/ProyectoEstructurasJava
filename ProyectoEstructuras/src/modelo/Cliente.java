@@ -16,13 +16,12 @@ public class Cliente extends Usuario{
     private int puntos;
     private IList<Notificacion> notificaciones;
 
-    public Cliente(String nombre, int id, String contraseña) {
-        super(nombre, id, contraseña);
+    public Cliente(String nombre, int id, String contraseña, int edad, String correo, String telefono, String direccion) {
+        super(nombre, id, contraseña, edad, correo, telefono, direccion);
         this.puntos = 0;
         this.notificaciones = new Lista<>();
     }
     
-
     public int getPuntos() {
         return puntos;
     }

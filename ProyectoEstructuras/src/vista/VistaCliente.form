@@ -36,12 +36,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton2" min="-2" pref="230" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" pref="230" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
-                          <Component id="jButton4" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
-                          <Component id="jButton5" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
-                          <Component id="jButton6" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="btnRedencion" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="btnResumonInfo" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="btnPuntosAcumulados" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="btnDevoluciones" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="btnReservas" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="btnNotificasiones" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -63,17 +63,17 @@
                   <Component id="lblPuntos" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnResumonInfo" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+              <Component id="btnPuntosAcumulados" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="btnRedencion" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+              <Component id="btnDevoluciones" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+              <Component id="btnReservas" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+              <Component id="btnNotificasiones" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="100" max="32767" attributes="0"/>
               <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -97,30 +97,45 @@
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnResumonInfo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Resumen de informacion"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResumonInfoActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="btnRedencion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Historial de redencion"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRedencionActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="btnPuntosAcumulados">
       <Properties>
         <Property name="text" type="java.lang.String" value="Puntos acumulados"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPuntosAcumuladosActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="btnDevoluciones">
       <Properties>
         <Property name="text" type="java.lang.String" value="Devoluciones"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDevolucionesActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="btnReservas">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reservar tiquete"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReservasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegresar">
       <Properties>
@@ -130,10 +145,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegresarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="btnNotificasiones">
       <Properties>
         <Property name="text" type="java.lang.String" value="Notificaciones"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNotificasionesActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

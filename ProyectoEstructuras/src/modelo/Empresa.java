@@ -45,5 +45,7 @@ public class Empresa implements Serializable{
         this.nit = nit;
     }
     
-    
+    public String toString(){
+        return Nombre;
+    }
 }

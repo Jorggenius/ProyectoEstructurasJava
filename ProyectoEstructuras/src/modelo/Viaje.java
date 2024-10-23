@@ -17,6 +17,7 @@ public class Viaje implements Serializable{
     private String origen;
     private String destino;
     private LocalDate fechaCreacion;
+    private LocalDate fechaSalida;
     private LocalTime horaSalida;
     private LocalDate fechaLLegada;
     private LocalTime horaLlegada;
@@ -24,16 +25,25 @@ public class Viaje implements Serializable{
     private double valorUnidad;
     private int id;
 
-    public Viaje(String origen, String destino, LocalDate fechaCreacion, LocalTime horaSalida, LocalDate fechaLLegada, LocalTime horaLlegada, Bus bus, double valorUnidad,int id) {
+    public Viaje(String origen, String destino, LocalDate fechaCreacion,LocalDate fechaSalida, LocalTime horaSalida, LocalDate fechaLLegada, LocalTime horaLlegada, Bus bus, double valorUnidad,int id) {
         this.origen = origen;
         this.destino = destino;
         this.fechaCreacion = fechaCreacion;
+        this.fechaSalida = fechaSalida;
         this.horaSalida = horaSalida;
         this.fechaLLegada = fechaLLegada;
         this.horaLlegada = horaLlegada;
         this.bus = bus;
         this.valorUnidad = valorUnidad;
         this.id = id;
+    }
+
+    public LocalDate getFechaSalida() {
+        return fechaSalida;
+    }
+
+    public void setFechaSalida(LocalDate fechaSalida) {
+        this.fechaSalida = fechaSalida;
     }
 
     public int getId() {
@@ -109,8 +119,10 @@ public class Viaje implements Serializable{
     }
     
     public String toString(){
-        return origen+"-"+destino ;
+        return origen+" - "+destino+" / №Puestos: " + bus.getPuesto() +" / Salida: " + fechaSalida ;
     }
+    
+    
     
     
 }

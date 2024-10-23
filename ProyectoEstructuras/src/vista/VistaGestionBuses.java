@@ -228,7 +228,7 @@ public class VistaGestionBuses extends javax.swing.JFrame {
                 int puestos = Integer.parseInt(txtPuestos.getText());
                 if (!controlGB.validarPlaca(placa)) {
                     Bus bus = new Bus(placa, puestos);
-                    controlGB.guardarCliente(bus);
+                    controlGB.guardarBus(bus);
                     JOptionPane.showMessageDialog(null, "El bus se ha agregado");
                     llenarTabla();
                     limpiarCampos();

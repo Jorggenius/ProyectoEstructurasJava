@@ -5,6 +5,8 @@
 package vista;
 
 import control.ControlVentaTiquetes;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -25,13 +27,15 @@ import modelo.Viaje;
  * @author JORGE
  */
 public class VistaVentaTiquetes extends javax.swing.JFrame {
+
     ControlVentaTiquetes controlVT;
     Caseta caseta;
     AdmiFlota admiFlota;
+
     /**
      * Creates new form VistaVentaTiquetes
      */
-    public VistaVentaTiquetes(Caseta caseta,AdmiFlota admiFlota) {
+    public VistaVentaTiquetes(Caseta caseta, AdmiFlota admiFlota) {
         initComponents();
         setLocationRelativeTo(this);
         this.caseta = caseta;
@@ -44,11 +48,25 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
         listenerTabla();
         comboViajes();
         comboClientes();
+        cbViajes.setSelectedItem(null);
+        cbViajes.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (cbViajes.getSelectedItem() != null) {
+                        Viaje viaje = (Viaje) cbViajes.getSelectedItem();
+                        lblFechaViaje.setText("Fecha Viaje: " + viaje.getFechaSalida());
+                        txtValorViaje.setText("$: " + viaje.getValorUnidad());
+                    }
+                }
+            }
+
+        });
     }
 
-    private void llenarTabla(){
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Id","Viaje","Cantida","FechaCompra","Cliente"}
-                ,controlVT.getCaseta().getTiquetes().size());
+    private void llenarTabla() {
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Id", "Viaje", "Cantida", "FechaCompra", "Cliente"},
+                controlVT.getCaseta().getTiquetes().size());
         tablaTiquetes.setModel(model);
         TableModel modelTiquete = tablaTiquetes.getModel();
         for (int i = 0; i < controlVT.getCaseta().getTiquetes().size(); i++) {
@@ -59,44 +77,47 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
             modelTiquete.setValueAt(tiquete.getFechaCompra(), i, 3);
             modelTiquete.setValueAt(tiquete.getCliente(), i, 4);
         }
-   }
-    
-    private void listenerTabla(){
+    }
+
+    private void listenerTabla() {
         ListSelectionModel model = tablaTiquetes.getSelectionModel();
-        model.addListSelectionListener(new ListSelectionListener (){
+        model.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(tablaTiquetes.getSelectedRow()!=-1){
+                if (tablaTiquetes.getSelectedRow() != -1) {
                     txtIdTiquete.setText(String.valueOf(tablaTiquetes.
                             getValueAt(tablaTiquetes.getSelectedRow(), 0)));
                 }
             }
-            
+
         });
     }
-    
-    private void comboViajes(){
+
+    private void comboViajes() {
         cbViajes.removeAllItems();
         for (int i = 0; i < controlVT.getCaseta().getViajes().size(); i++) {
             cbViajes.addItem(controlVT.getCaseta().getViajes().get(i));
         }
     }
-    
-    private void comboClientes(){
+
+    private void comboClientes() {
         cbCLientes.removeAllItems();
         for (int i = 0; i < controlVT.obtenerClientes().size(); i++) {
             cbCLientes.addItem(controlVT.obtenerClientes().get(i));
         }
     }
-    
-    public void limpiarCampos(){
+
+    public void limpiarCampos() {
         cbViajes.setSelectedItem(null);
         txtCantidad.setText("");
         cbCLientes.setSelectedItem(null);
         dateFecha.setDate(null);
         txtIdTiquete.setText("");
+        lblFechaViaje.setText("     ");
+        txtValorViaje.setText("      ");
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -127,6 +148,9 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        lblFechaViaje = new javax.swing.JLabel();
+        lblValorViajes = new javax.swing.JLabel();
+        txtValorViaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,65 +226,78 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
             }
         });
 
+        lblFechaViaje.setText("                ");
+
+        lblValorViajes.setText("Valor viaje:");
+
+        txtValorViaje.setText("                                  ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblAdmiFlota)
-                                .addGap(70, 70, 70)
-                                .addComponent(lblId)
-                                .addGap(43, 43, 43)
-                                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(112, 112, 112)
-                                .addComponent(lblEmpresa)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblCliente)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbCLientes, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblCantidad)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblViaje)
-                                        .addGap(41, 41, 41)
-                                        .addComponent(cbViajes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(62, 62, 62)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFecha)
-                                    .addComponent(lblIdTiquete))
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(dateFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                    .addComponent(txtIdTiquete)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnRegresar)))
-                        .addGap(0, 64, Short.MAX_VALUE)))
+                        .addComponent(lblAdmiFlota)
+                        .addGap(92, 92, 92)
+                        .addComponent(lblId)
+                        .addGap(79, 79, 79)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addComponent(lblEmpresa)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(164, 164, 164)
-                .addComponent(btnIngresar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEditar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnRegresar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(lblViaje)
+                                .addGap(41, 41, 41)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblFechaViaje)
+                                    .addComponent(cbViajes, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 26, Short.MAX_VALUE)
+                                        .addComponent(btnIngresar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnBuscar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnEditar)))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblFecha)
+                                .addComponent(lblIdTiquete)
+                                .addComponent(lblValorViajes))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEliminar)
+                                .addGap(49, 49, 49)))
+                        .addGap(42, 42, 42))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lblCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbCLientes, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lblCantidad)
+                                .addGap(115, 115, 115)
+                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dateFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtIdTiquete, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(txtValorViaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(69, 69, 69))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,33 +311,40 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
                     .addComponent(lblTitulo))
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFecha)
+                            .addComponent(dateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegresar)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblViaje)
-                            .addComponent(cbViajes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFecha))
-                        .addGap(23, 23, 23)
+                            .addComponent(cbViajes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFechaViaje)
+                        .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCantidad)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblIdTiquete)
                             .addComponent(txtIdTiquete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCliente)
-                            .addComponent(cbCLientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(dateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIngresar)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnEliminar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(btnRegresar)
-                .addContainerGap())
+                            .addComponent(cbCLientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValorViajes)
+                            .addComponent(txtValorViaje))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnIngresar)
+                            .addComponent(btnBuscar)
+                            .addComponent(btnEditar)
+                            .addComponent(btnEliminar))
+                        .addGap(56, 56, 56))))
         );
 
         pack();
@@ -316,17 +360,32 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
         try {
+
             Viaje viaje = (Viaje) cbViajes.getSelectedItem();
             int cantidad = Integer.parseInt(txtCantidad.getText());
-            Cliente cliente = (Cliente) cbCLientes.getSelectedItem();
-            Date fecha2 = dateFecha.getDate();
-            LocalDate fechaCompra = fecha2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            int idTiquete = Integer.parseInt(txtIdTiquete.getText());
-            Tiquete tiquete = new Tiquete(viaje, cantidad, cliente, fechaCompra, idTiquete);
-            controlVT.guardarTiquete(tiquete);
-            JOptionPane.showMessageDialog(null, "EL tiquete se a guardado");
-            llenarTabla();
-            limpiarCampos();
+            if (controlVT.validarCantidad(viaje, cantidad)) {
+                Cliente cliente = (Cliente) cbCLientes.getSelectedItem();
+                Date fecha2 = dateFecha.getDate();
+                LocalDate fechaCompra = fecha2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if (controlVT.validarFecha(viaje, fechaCompra)) {
+                    int idTiquete = Integer.parseInt(txtIdTiquete.getText());
+                    Tiquete tiquete = new Tiquete(viaje, cantidad, cliente, fechaCompra, idTiquete);
+                    controlVT.guardarTiquete(tiquete);
+                    int puntos = (int) (((cantidad * viaje.getValorUnidad()) / 10000) * 3);
+                    controlVT.asignarPuntos(puntos, cliente);
+                    JOptionPane.showMessageDialog(null, "EL tiquete se a guardado "
+                            + "\ntotal: " + cantidad * viaje.getValorUnidad()
+                            + "\nPuntos acumulados: " + puntos);
+                    llenarTabla();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "La fecha esta pasada de la del viaje");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay cupo pa tanta gente solo hay: "
+                        + controlVT.cuposDisponibles(viaje)
+                        + "\nPero puede reservar");
+            }
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -342,12 +401,21 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        try {
+            int idTiquete = Integer.parseInt(txtIdTiquete.getText());
+            controlVT.eliminarPuntos(idTiquete);
+            controlVT.eliminarTiquete(idTiquete);
+            JOptionPane.showMessageDialog(null, "El tiquete se ha eliminado");
+            llenarTabla();
+            limpiarCampos();
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -364,12 +432,15 @@ public class VistaVentaTiquetes extends javax.swing.JFrame {
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblEmpresa;
     private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblFechaViaje;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblIdTiquete;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblValorViajes;
     private javax.swing.JLabel lblViaje;
     private javax.swing.JTable tablaTiquetes;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtIdTiquete;
+    private javax.swing.JLabel txtValorViaje;
     // End of variables declaration//GEN-END:variables
 }

@@ -44,9 +44,6 @@ public class VistaTerminal extends javax.swing.JFrame implements ActionListener{
         for (int i = 0; i < botones.length; i++) {
             for (int j = 0; j < botones[i].length; j++) {
                 botones[i][j] = new JButton();
-               
-                
-                
                 if (i == 1) {
                     botones[i][j].setBounds(ancho * j + separado + 
                             (j >= 1 ? 100*3 : 0),
@@ -62,7 +59,6 @@ public class VistaTerminal extends javax.swing.JFrame implements ActionListener{
                             alto * i + separado, ancho, alto);
                 }
 
-              
                 botones[i][j].addActionListener(this);
                 this.add(botones[i][j]);
             }

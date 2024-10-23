@@ -30,7 +30,7 @@ public class ControlGestionBuses {
         this.caseta = caseta;
     }
 
-    public void guardarCliente(Bus bus) throws RuntimeException {
+    public void guardarBus(Bus bus) throws RuntimeException {
         Bus aux = buscarBus(bus.getPlaca());
         if (aux == null) {
             caseta.getBuses().add(bus);

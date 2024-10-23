@@ -10,9 +10,8 @@ package modelo;
  */
 public class AdmiTerminal extends Usuario{
 
-    public AdmiTerminal() {
-        super(null, 0, null);
+    public AdmiTerminal(String nombre, int id, String contraseña, int edad, String correo, String telefono, String direccion) {
+        super(nombre, id, contraseña, edad, correo, telefono, direccion);
     }
-    
     
 }

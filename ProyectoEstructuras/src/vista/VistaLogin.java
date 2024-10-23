@@ -27,63 +27,13 @@ public class VistaLogin extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         controlL = new ControlLogin();
-        btnAccion.setText("   ");
-        btnAccion.setEnabled(false);
-        txtNombre.setEnabled(false);
-        txtContraseña.setEnabled(false);
-        txtId.setEnabled(false);
-        lblId.setText("");
-        checkIngresar.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (checkIngresar.isSelected()) {
-                    checkRegistrar.setEnabled(false);
-                    txtNombre.setEnabled(true);
-                    txtContraseña.setEnabled(true);
-                    txtId.setEnabled(false);
-                    btnAccion.setEnabled(true);
-                    btnAccion.setText("Ingresar");
-                } else {
-                    checkRegistrar.setEnabled(true);
-                    txtNombre.setEnabled(false);
-                    txtContraseña.setEnabled(false);
-                    txtId.setEnabled(false);
-                    btnAccion.setEnabled(false);
-                    btnAccion.setText("     ");
-                }
-            }
-
-        });
-        checkRegistrar.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (checkRegistrar.isSelected()) {
-                    checkIngresar.setEnabled(false);
-                    txtNombre.setEnabled(true);
-                    txtContraseña.setEnabled(true);
-                    txtId.setEnabled(true);
-                    btnAccion.setEnabled(true);
-                    btnAccion.setText("Registrar");
-                    lblId.setText("Id:");
-                } else {
-                    checkIngresar.setEnabled(true);
-                    txtNombre.setEnabled(false);
-                    txtContraseña.setEnabled(false);
-                    txtId.setEnabled(false);
-                    btnAccion.setEnabled(false);
-                    btnAccion.setText("     ");
-                    lblId.setText("");
-                }
-            }
-
-        });
     }
 
-    public void limpiarCampos(){
+    public void limpiarCampos() {
         txtNombre.setText("");
         txtContraseña.setText("");
-        txtId.setText("");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,13 +46,10 @@ public class VistaLogin extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JTextField();
-        txtId = new javax.swing.JTextField();
         lblNombre = new javax.swing.JLabel();
         lblContraseña = new javax.swing.JLabel();
-        lblId = new javax.swing.JLabel();
-        checkRegistrar = new javax.swing.JCheckBox();
-        checkIngresar = new javax.swing.JCheckBox();
-        btnAccion = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
+        btnRegistrarUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,16 +60,17 @@ public class VistaLogin extends javax.swing.JFrame {
 
         lblContraseña.setText("Contraseña:");
 
-        lblId.setText("Id:");
-
-        checkRegistrar.setText("registrar cliente");
-
-        checkIngresar.setText("Ingresar ");
-
-        btnAccion.setText("jButton1");
-        btnAccion.addActionListener(new java.awt.event.ActionListener() {
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAccionActionPerformed(evt);
+                btnIngresarActionPerformed(evt);
+            }
+        });
+
+        btnRegistrarUsuario.setText("Registrar Usuario");
+        btnRegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarUsuarioActionPerformed(evt);
             }
         });
 
@@ -131,44 +79,34 @@ public class VistaLogin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(91, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblTitulo)
                         .addGap(81, 81, 81))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(checkIngresar)
-                                .addGap(41, 41, 41)
-                                .addComponent(checkRegistrar)
-                                .addGap(37, 37, 37))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblId, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblContraseña, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(106, 106, 106)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtContraseña, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblContraseña, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(106, 106, 106)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtContraseña, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(96, 96, 96))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(btnAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(lblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(checkIngresar)
-                    .addComponent(checkRegistrar))
-                .addGap(23, 23, 23)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombre))
@@ -176,58 +114,48 @@ public class VistaLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblContraseña))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblId))
                 .addGap(32, 32, 32)
-                .addComponent(btnAccion)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addComponent(btnIngresar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(btnRegistrarUsuario)
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-        if (checkIngresar.isSelected()) {
-            String nombre = txtNombre.getText();
-            String contraseña = txtContraseña.getText();
-            if (nombre.equals("") && contraseña.equals("")) {
-                VistaTerminal vistaAT = new VistaTerminal();
-                vistaAT.setVisible(true);
+        String nombre = txtNombre.getText();
+        String contraseña = txtContraseña.getText();
+        if (nombre.equals("") && contraseña.equals("")) {
+            VistaTerminal vistaAT = new VistaTerminal();
+            vistaAT.setVisible(true);
+            this.dispose();
+        } else {
+            Usuario usuario = controlL.validarAcceso(contraseña, nombre);
+            if (usuario instanceof Cliente) {
+                Cliente cliente = (Cliente) usuario;
+                VistaCliente vistaC = new VistaCliente(cliente);
+                vistaC.setVisible(true);
                 this.dispose();
-            }else{
-                Usuario usuario = controlL.validarAcceso(contraseña, nombre);
-                if(usuario instanceof Cliente){
-                    Cliente cliente = (Cliente) usuario;
-                    VistaCliente vistaC = new VistaCliente(cliente);
-                    vistaC.setVisible(true);
-                    this.dispose();
-                }else if (usuario instanceof AdmiFlota){
-                    AdmiFlota admiFlota = (AdmiFlota) usuario;
-                    VistaFlota vistaF = new VistaFlota(admiFlota);
-                    vistaF.setVisible(true);
-                    this.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Acceso denegado");
-                }
-            }
-        } else if (checkRegistrar.isSelected()) {
-            try {
-                String nombre = txtNombre.getText();
-                String contraseña = txtContraseña.getText();
-                int id = Integer.parseInt(txtId.getText());
-                Cliente cliente = new Cliente(nombre, id, contraseña);
-                controlL.guardarCliente(cliente);
-                JOptionPane.showMessageDialog(null, "El cliente se registro");
-                limpiarCampos();
-                checkRegistrar.setSelected(false);
-            } catch (RuntimeException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+            } else if (usuario instanceof AdmiFlota) {
+                AdmiFlota admiFlota = (AdmiFlota) usuario;
+                VistaFlota vistaF = new VistaFlota(admiFlota);
+                vistaF.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Acceso denegado");
             }
         }
-    }//GEN-LAST:event_btnAccionActionPerformed
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnRegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuarioActionPerformed
+        // TODO add your handling code here:
+        VistaRegistro vistaR = new VistaRegistro();
+        vistaR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegistrarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,15 +193,12 @@ public class VistaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAccion;
-    private javax.swing.JCheckBox checkIngresar;
-    private javax.swing.JCheckBox checkRegistrar;
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnRegistrarUsuario;
     private javax.swing.JLabel lblContraseña;
-    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtContraseña;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

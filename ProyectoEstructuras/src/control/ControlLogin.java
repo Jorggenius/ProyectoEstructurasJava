@@ -27,45 +27,52 @@ public class ControlLogin {
         return usuarios;
     }
 
-    public void guardarCliente(Usuario usuario) throws RuntimeException {
-        Usuario aux = buscarCliente(usuario.getId());
-        if (aux == null) {
-            usuarios.add(usuario);
-            Singleton.getINSTANCIA().escribirUsuarios();
-            return;
-        }
-        throw new RuntimeException("El id ya esta en uso");
-    }
-
-    public Usuario buscarCliente(int id) {
+    public Usuario validarAcceso(String contraseña, String nombre) {
         for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getId() == (id)) {
+            if (usuarios.get(i).getNombre().equals(nombre)
+                    && usuarios.get(i).getContraseña().equals(contraseña)) {
                 return usuarios.get(i);
             }
         }
         return null;
     }
 
-    
-    public Usuario validarAcceso(String contraseña, String nombre){
-        for (int i = 0; i < usuarios.size(); i++) {
-            if(usuarios.get(i).getNombre().equals(nombre)&&
-                    usuarios.get(i).getContraseña().equals(contraseña)){
-                return usuarios.get(i);
-            }
-        }
-        return null;
-    }
-    
-    public Lista<Cliente> obtenerClientes(){
+    public Lista<Cliente> obtenerClientes() {
         Lista<Cliente> clientes = new Lista<>();
         for (int i = 0; i < usuarios.size(); i++) {
-            if(usuarios.get(i)instanceof Cliente){
-                clientes.add((Cliente)usuarios.get(i));
+            if (usuarios.get(i) instanceof Cliente) {
+                clientes.add((Cliente) usuarios.get(i));
             }
         }
         return clientes;
     }
-        
+
+    public void asignarPuntos(int puntos, Cliente cliente) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            if(usuarios.get(i).getId() == cliente.getId()){
+                Cliente aux =(Cliente) usuarios.get(i);
+                int acumulado = aux.getPuntos();
+                aux.setPuntos(puntos + acumulado);
+                usuarios.remove(i);
+                usuarios.add(aux);
+                Singleton.getINSTANCIA().escribirUsuarios();
+                return;
+            }
+        }
     
+    }
+
+    public void eliminarPuntos(int puntos, Cliente cliente) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getId() == cliente.getId()) {
+                Cliente aux = (Cliente) usuarios.get(i);
+                int acomulado = aux.getPuntos();
+                aux.setPuntos(acomulado - puntos);
+                usuarios.remove(i);
+                usuarios.add(aux);
+                Singleton.getINSTANCIA().escribirUsuarios();
+                return;
+            }
+        }
+    }
 }
