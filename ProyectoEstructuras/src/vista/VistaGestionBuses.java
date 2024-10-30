@@ -41,7 +41,8 @@ public class VistaGestionBuses extends javax.swing.JFrame {
     }
 
     private void llenarTabla() {
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Placa", "Puestos"},
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Placa", 
+            "Puestos","Marca", "Color","Ruedas"},
                 controlGB.getCaseta().getBuses().size());
         tablaBuses.setModel(model);
         TableModel modelBus = tablaBuses.getModel();
@@ -49,6 +50,9 @@ public class VistaGestionBuses extends javax.swing.JFrame {
             Bus bus = controlGB.getCaseta().getBuses().get(i);
             modelBus.setValueAt(bus.getPlaca(), i, 0);
             modelBus.setValueAt(bus.getPuesto(), i, 1);
+            modelBus.setValueAt(bus.getMarca(), i, 2);
+            modelBus.setValueAt(bus.getColor(), i, 3);
+            modelBus.setValueAt(bus.getRuedas(), i, 4);
         }
     }
 
@@ -80,8 +84,8 @@ public class VistaGestionBuses extends javax.swing.JFrame {
     private void initComponents() {
 
         lblTitulo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblPlaca = new javax.swing.JLabel();
+        lblPuestos = new javax.swing.JLabel();
         txtPlaca = new javax.swing.JTextField();
         txtPuestos = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
@@ -90,15 +94,21 @@ public class VistaGestionBuses extends javax.swing.JFrame {
         tablaBuses = new javax.swing.JTable();
         btnEliminar = new javax.swing.JButton();
         lblPlazas = new javax.swing.JLabel();
+        lblMarca = new javax.swing.JLabel();
+        lblColor = new javax.swing.JLabel();
+        txtMarca = new javax.swing.JTextField();
+        txtColor = new javax.swing.JTextField();
+        lblRuedas = new javax.swing.JLabel();
+        txtRuedas = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo.setText("Registro de buses");
 
-        jLabel1.setText("Placa:");
+        lblPlaca.setText("Placa:");
 
-        jLabel2.setText("Puesto:");
+        lblPuestos.setText("Puesto:");
 
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
@@ -119,11 +129,11 @@ public class VistaGestionBuses extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Placa", "Puestos"
+                "Placa", "Puestos", "Marca", "Color", "Ruedas"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -141,6 +151,12 @@ public class VistaGestionBuses extends javax.swing.JFrame {
 
         lblPlazas.setText("jLabel3");
 
+        lblMarca.setText("Marca:");
+
+        lblColor.setText("Color:");
+
+        lblRuedas.setText("Ruedas:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,33 +164,45 @@ public class VistaGestionBuses extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(btnRegresar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
+                                .addGap(93, 93, 93)
                                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1))
-                                        .addGap(77, 77, 77))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(btnIngresar)
-                                        .addGap(27, 27, 27)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEliminar)
-                                    .addComponent(txtPuestos, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(72, 72, 72)
+                                .addComponent(btnIngresar)
+                                .addGap(27, 27, 27)
+                                .addComponent(btnEliminar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblPlazas))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnRegresar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblPlazas)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 66, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPuestos)
+                                    .addComponent(lblPlaca))
+                                .addGap(74, 74, 74)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPuestos, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblColor)
+                                    .addComponent(lblMarca)
+                                    .addComponent(lblRuedas))
+                                .addGap(72, 72, 72)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtRuedas, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 45, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -187,27 +215,37 @@ public class VistaGestionBuses extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addComponent(lblTitulo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
+                                    .addComponent(lblPlaca))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPuestos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(29, 29, 29)
+                                    .addComponent(lblPuestos))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblMarca))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblColor))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtRuedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblRuedas))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnIngresar)
                                     .addComponent(btnEliminar))
-                                .addGap(35, 35, 35))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblPlazas)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(btnRegresar)
-                        .addGap(19, 19, 19))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnRegresar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -226,8 +264,11 @@ public class VistaGestionBuses extends javax.swing.JFrame {
             if (controlGB.validarPlazas()) {
                 String placa = txtPlaca.getText();
                 int puestos = Integer.parseInt(txtPuestos.getText());
+                String marca = txtMarca.getText();
+                String color = txtColor.getText();
+                int ruedas = Integer.parseInt(txtRuedas.getText());
                 if (!controlGB.validarPlaca(placa)) {
-                    Bus bus = new Bus(placa, puestos);
+                    Bus bus = new Bus(placa, puestos, marca, color, ruedas);
                     controlGB.guardarBus(bus);
                     JOptionPane.showMessageDialog(null, "El bus se ha agregado");
                     llenarTabla();
@@ -264,13 +305,19 @@ public class VistaGestionBuses extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblColor;
+    private javax.swing.JLabel lblMarca;
+    private javax.swing.JLabel lblPlaca;
     private javax.swing.JLabel lblPlazas;
+    private javax.swing.JLabel lblPuestos;
+    private javax.swing.JLabel lblRuedas;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tablaBuses;
+    private javax.swing.JTextField txtColor;
+    private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtPlaca;
     private javax.swing.JTextField txtPuestos;
+    private javax.swing.JTextField txtRuedas;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,8 @@
 package modelo;
 
 import java.io.Serializable;
+import util.IList;
+import util.Lista;
 
 /**
  *
@@ -14,11 +16,21 @@ public class Empresa implements Serializable{
     private AdmiFlota admiFlota;
     private String Nombre;
     private int nit;
+    private IList<Bus> buses;
 
     public Empresa(String Nombre, int nit, AdmiFlota admiFlota) {
         this.Nombre = Nombre;
         this.nit = nit;
         this.admiFlota = admiFlota;
+        this.buses = new Lista<>();
+    }
+
+    public IList<Bus> getBuses() {
+        return buses;
+    }
+
+    public void setBuses(IList<Bus> buses) {
+        this.buses = buses;
     }
 
     public AdmiFlota getAdmiFlota() {
