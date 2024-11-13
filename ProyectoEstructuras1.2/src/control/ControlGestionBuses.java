@@ -1,0 +1,87 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package control;
+
+import excepcion.IdExiste;
+import modelo.Bus;
+import modelo.Caseta;
+import singleton.Singleton;
+import util.IList;
+
+/**
+ *
+ * @author JORGE
+ */
+public class ControlGestionBuses {
+
+    ControlVistaTerminal controlVT;
+    private Caseta caseta;
+
+    public ControlGestionBuses(Caseta caseta) {
+        this.caseta = caseta;
+        controlVT = new ControlVistaTerminal();
+    }
+
+    public Caseta getCaseta() {
+        return caseta;
+    }
+
+    public void setCaseta(Caseta caseta) {
+        this.caseta = caseta;
+    }
+
+    public void guardarBus(Bus bus) throws IdExiste {
+        Bus aux = buscarBus(bus.getPlaca());
+        if (aux == null) {
+            caseta.getEmpresa().getBuses().add(bus);
+            Singleton.getINSTANCIA().escribirCasetas();
+            return;
+        }
+        throw new IdExiste();
+    }
+
+    public Bus buscarBus(String placa) {
+        for (int i = 0; i < caseta.getEmpresa().getBuses().size(); i++) {
+            if (caseta.getEmpresa().getBuses().get(i).getPlaca().equals(placa)) {
+                return caseta.getEmpresa().getBuses().get(i);
+            }
+        }
+        return null;
+    }
+
+    public void eliminarBus(String placa) throws RuntimeException {
+        for (int i = 0; i < caseta.getEmpresa().getBuses().size(); i++) {
+            if (caseta.getEmpresa().getBuses().get(i).getPlaca().equals(placa)) {
+                caseta.getEmpresa().getBuses().remove(i);
+                Singleton.getINSTANCIA().escribirCasetas();
+                return;
+            }
+        }
+        throw new RuntimeException("No se encuentra el Bus que desea eliminar");
+    }
+
+    public void editarElemento(Bus bus) throws RuntimeException {
+        Bus aux = buscarBus(bus.getPlaca());
+        if (aux != null) {
+            aux.setColor(bus.getColor());
+            aux.setMarca(bus.getMarca());
+            aux.setPuesto(bus.getPuesto());
+            aux.setRuedas(bus.getRuedas());
+            return;
+        }
+        throw new RuntimeException("No se encuentra el Elemento que desea editar");
+    }
+
+    public boolean validarPlazas() {
+        if (caseta.getEmpresa().getBuses().size() < caseta.getPlazas()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean validarPlaca(String placa) {
+        return controlVT.validarPlaca(placa);
+    }
+}
