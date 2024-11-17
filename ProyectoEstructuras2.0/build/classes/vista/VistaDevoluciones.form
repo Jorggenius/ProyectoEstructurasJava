@@ -134,7 +134,7 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="true" title="Id" type="java.lang.Integer"/>
                 <Column editable="true" title="Viaje" type="java.lang.Object"/>
-                <Column editable="true" title="Fecha compra" type="java.lang.Object"/>
+                <Column editable="true" title="Fecha Devolucion" type="java.lang.Object"/>
                 <Column editable="true" title="Cliente" type="java.lang.Object"/>
               </Table>
             </Property>

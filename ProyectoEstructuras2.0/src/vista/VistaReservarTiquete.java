@@ -415,29 +415,34 @@ public class VistaReservarTiquete extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Hay "
                         + "campos incompletos. Por favor, llene todos "
                         + "los campos.");
-                return; // Salir del método si hay campos vacíos  
+                return;
             }
             Viaje viaje = controlVRT.conseguirViaje(Integer.parseInt(txtViaje.getText()));
             int cantidad = Integer.parseInt(txtCantidad.getText());
+
+            Date fecha = dateCompra.getDate();
+            LocalDate fechaCompra = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             if (controlVRT.validarCantidad(viaje, cantidad)) {
-                for (int i = 0; i < cantidad; i++) {
-                    Cliente cliente = this.cliente;
-                    Date fecha = dateCompra.getDate();
-                    LocalDate fechaCompra = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    int id = Integer.parseInt(txtIdReserva.getText());
-                    Reserva reserva = new Reserva(viaje, cantidad, cliente, fechaCompra, id);
-                    controlVRT.guardarReserva(reserva);
-                    Empresa empresa = controlVRT.conseguirEmpresaViaje(viaje);
-                    String mensaje = cliente.getNombre() + " usted ha reservado un tiquete\ncon id: " + reserva.getId() + "\nFecha de reserva: " + reserva.getFechaCompra()
-                            + "\ny destino: " + viaje.getDestino() + "\nMuchas Gracias por su Reserva\nEspere su pronta validacion\npara poder hacer uso de su tiquet";
-                    Notificacion notif = new Notificacion(numeroIdNotif(),
-                            fechaCompra, mensaje, cliente,
-                            empresa, "Reserva");
-                    controlVRT.guardarNotifs(notif);
-                    llenarTablaReservas();
-                    txtIdReserva.setText(String.valueOf(numeroId()));
+                if (fechaCompra.isBefore(viaje.getFechaSalida())) {
+                    for (int i = 0; i < cantidad; i++) {
+                        Cliente cliente = this.cliente;
+                        int id = Integer.parseInt(txtIdReserva.getText());
+                        Reserva reserva = new Reserva(viaje, cantidad, cliente, fechaCompra, id);
+                        controlVRT.guardarReserva(reserva);
+                        Empresa empresa = controlVRT.conseguirEmpresaViaje(viaje);
+                        String mensaje = cliente.getNombre() + " usted ha reservado un tiquete\ncon id: " + reserva.getId() + "\nFecha de reserva: " + reserva.getFechaCompra()
+                                + "\ny destino: " + viaje.getDestino() + "\nMuchas Gracias por su Reserva\nEspere su pronta validacion\npara poder hacer uso de su tiquet";
+                        Notificacion notif = new Notificacion(numeroIdNotif(),
+                                fechaCompra, mensaje, cliente,
+                                empresa, "Reserva");
+                        controlVRT.guardarNotifs(notif);
+                        llenarTablaReservas();
+                        txtIdReserva.setText(String.valueOf(numeroId()));
+                    }
+                    JOptionPane.showMessageDialog(null, "La reserva ha sido hecha");
+                } else {
+                    JOptionPane.showMessageDialog(null, "La fecha esta adelanta a la salida del viaje");
                 }
-                JOptionPane.showMessageDialog(null, "La reserva ha sido hecha");
             } else {
                 JOptionPane.showMessageDialog(null, "No hay cupo pa tanta gente solo hay: "
                         + controlVRT.cuposDisponibles(viaje)
